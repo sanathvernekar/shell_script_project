@@ -1,4 +1,4 @@
-#Project : To famililarise with Linux Commands
+#Project : To familiarize with Linux Commands
 #Author :-sanath vernekar
 #Procedure to use in Linux Terminal
 #chmod +x file path along with file name 
