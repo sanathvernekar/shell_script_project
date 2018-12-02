@@ -93,35 +93,44 @@ do
 					case "$enc_choice" in 
 						1)	echo "Enter the Exact File Name with extension to Encrypt the File"
 							read file_name;
-							gpg -c $file_name
-									echo "Your file has been successfully Encrypted! "
-									echo "Now the original file will be removed."
-									rm -rf $file_name
-									#echo "Wrong File name entered! "
-									#echo "Re-run the program!  ;("
+									if [ -s $file_name ]
+										then
+											gpg -c $file_name
+											echo "Your file has been successfully Encrypted! "
+											echo "Now the original file will be removed."
+											rm -rf $file_name
+										else
+											echo "Wrong File name entered!  ;("
+											#echo "Re-run the program!  ;("
+									fi
 							;;
 						2)	echo "Enter the Exact File Name with extension to Decrypt the File"
 							read dec_file_name
-							new_file_modified=${dec_file_name::-4}
-							gpg -d $dec_file_name > $new_file_modified 
-							if [ -s $new_file_modified  ]
+							if [ -s $dec_file_name ]
 								then
-    								echo "ok"
-									rm -rf $dec_file_name
-									if [ -s snap.jpg ]
+									new_file_modified=${dec_file_name::-4}
+									gpg -d $dec_file_name > $new_file_modified 
+									if [ -s $new_file_modified  ]
 										then
-											echo "$new_file_modified successfully decrypted"
-											echo "Intruder Picture "
-											display /home/sanath/linux/snap.jpg
-											echo "Your Decrypted picture "
-											display $new_file_modified
+    										echo "ok"
+											rm -rf $dec_file_name
+											if [ -s snap.jpg ]
+												then
+													echo "$new_file_modified successfully decrypted"
+													echo "Intruder Picture "
+													display /home/sanath/linux/snap.jpg
+													echo "Your Decrypted picture "
+													display $new_file_modified
+												else
+													echo "_____"
+											fi
 										else
-											echo "_____"
+    										echo "not ok"
+											rm -rf $new_file_modified
+											uvccapture -m
 									fi
 								else
-    								echo "not ok"
-									rm -rf $new_file_modified
-									uvccapture -m
+									echo "Wrong File name Entered ;("
 							fi
 							
 							echo "Thank You"
