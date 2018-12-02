@@ -6,7 +6,6 @@
 #ex: chmod +x /home/sanath/linux_commands.sh
 #then directly execute this file by entering ./filename
 #ex:./linux_commands.sh
-false_alert=0
 while true
 do
 		
@@ -111,18 +110,20 @@ do
 									rm -rf $dec_file_name
 									if [ -s snap.jpg ]
 										then
+											echo "$new_file_modified successfully decrypted"
 											echo "Intruder Picture "
 											display /home/sanath/linux/snap.jpg
+											echo "Your Decrypted picture "
+											display $new_file_modified
 										else
 											echo "_____"
 									fi
 								else
     								echo "not ok"
-									$false_alert=$false_alert+1
 									rm -rf $new_file_modified
 									uvccapture -m
 							fi
-							echo "$new_file_modified successfully decrypted"
+							
 							echo "Thank You"
 							;;
 						3)	echo "The files present in this folder are:-"
