@@ -6,6 +6,12 @@
 #ex: chmod +x /home/sanath/linux_commands.sh
 #then directly execute this file by entering ./filename
 #ex:./linux_commands.sh
+
+
+#Requires
+#1.uvacapture  -----image capturing tool
+#2.libnotify-bin   ----notifier
+#3.gpg ------Encryption Tool 
 while true
 do
 		
@@ -38,6 +44,7 @@ do
 								echo "pwd"
 								echo "The root is the base of linux file system  denoted by /"
 								echo "Your Present Working Directory is "
+								#notify-send "Your Present Working Directory"
 								echo "==========================================================="
 								pwd  
 								echo "==========================================================="
@@ -60,6 +67,7 @@ do
 								echo "The Tree view of this folder"
 
 								ls -R
+								notify-send "TREE VIEW of Folder"
 								echo "==========================================================="	
 								;;
 							5)	echo "==========================================================="
@@ -68,7 +76,9 @@ do
 								echo "File Type      owner  usergp size  date /Time   directory/"
 								echo "Access Perm                        modified     filename  "
 								echo "==========================================================="
+								
 								ls -al	
+								notify-send "Tabular View of Folder"
 								echo "==========================================================="
 								;;
 							6)	echo "==========================================================="
@@ -78,6 +88,7 @@ do
 								echo "==========================================================="
 								;;
 							*)	echo "Wrong Choice"
+								notify-send "Wrong Choice"
 								;;
 					esac
 					echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
@@ -88,6 +99,12 @@ do
 					echo "1.To Encrypt File"
 					echo "2.To decrypt File"
 					echo "3.To display all files present in the folder"
+					echo "4.To hide a file in hidden folder"
+					echo "5.To view the files in Hidden folder"
+					echo "6.To unhide a file "
+
+					echo "Enter Your Choice [1 -3]"
+					notify-send "Enter choice"
 					read enc_choice;
 					clear 
 					case "$enc_choice" in 
@@ -97,9 +114,11 @@ do
 										then
 											gpg -c $file_name
 											echo "Your file has been successfully Encrypted! "
+											notify-send "Your file has been successfully Encrypted! "
 											echo "Now the original file will be removed."
 											rm -rf $file_name
 										else
+											notify-send "$file_name not found"
 											echo "Wrong File name entered!  ;("
 											#echo "Re-run the program!  ;("
 									fi
@@ -118,8 +137,10 @@ do
 												then
 													echo "$new_file_modified successfully decrypted"
 													echo "Intruder Picture "
-													display /home/sanath/linux/snap.jpg
+													notify-send "Intruder Picture "
+													display snap.jpg
 													echo "Your Decrypted picture "
+													notify-send "Your Decrypted Picture"
 													display $new_file_modified
 												else
 													echo "_____"
@@ -135,14 +156,49 @@ do
 							
 							echo "Thank You"
 							;;
-						3)	echo "The files present in this folder are:-"
+						3)	echo "All the files present in this folder are:-"
 							ls -l
+							;;
+						4)	echo "Enter the exact file name which you want to Hide in Hidden folder "
+							read hide_file_name
+							if [ -s $hide_file_name ]
+								then 
+									hide_file=".$hide_file_name"
+									cp $hide_file_name $hide_file
+									#cp $hide_file_name /home/sanath/.hidden_linux/$hide_file_name
+									rm -rf $hide_file_name
+									echo "$hide_file_name successfully hidden "
+									notify-send "$hide_file_name successfully hidden "
+							else 
+								echo "$hide_file_name not found "
+								notify-send "$hide_file_name not found "
+							fi
+							;;
+						5)	echo "All the files along with Hidden folders and files are"
+							ls -al
+							;;
+						6)	echo "Enter the exact file name which you want to Unhide ...."
+							read unhide_file_name
+							unhide_file=".$unhide_file_name"
+							#start_file_folder=pwd
+							if [ -s $unhide_file ]
+								then 
+									cp $unhide_file $unhide_file_name
+									rm -rf $unhide_file
+									echo "$unhide_file successfully Unhidden"
+									notify-send "$unhide_file successfully Unhidden"
+								else
+									echo "$unhide_file_name not found"
+									notify-send "$unhide_file_name not found "
+							fi
 							;;
 						*)	echo "Wrong Choice"
 							;;
 					esac		
 					;;
 				3)  echo "Thank You  :)"
+					notify-send "Thank You ;)"
+					notify-send "BYE"
 					echo "BYE"
 					exit;;
 				*)  echo -e "\n"
