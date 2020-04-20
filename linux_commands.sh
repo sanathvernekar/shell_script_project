@@ -3,7 +3,7 @@
 #Author :-sanath vernekar
 #Procedure to use in Linux Terminal
 #chmod +x file path along with file name 
-#ex: chmod +x /home/sanath/linux_commands.sh
+#ex: chmod +x ./linux_commands.sh
 #then directly execute this file by entering ./filename
 #ex:./linux_commands.sh
 

@@ -2,7 +2,7 @@
 #Author :-sanath vernekar
 #Procedure to use in Linux Terminal
 #chmod +x file path along with file name 
-#ex: chmod +x /home/sanath/sm.sh
+#ex: chmod +x ./sm.sh
 #then directly execute this file by entering ./filename
 #ex:./sm.sh
 while true
