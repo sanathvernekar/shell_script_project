@@ -401,7 +401,11 @@ echo "Enter value 1";
 read val1;
 echo "Enter value 2";
 read val2;
-math_comparision $val1 $val2
+#here if the value is NULL, it will replace with given string
+val1=${val1:="56"}
+val2=${val2:="45"}
+echo "value of one is $val1  value of 2 is $val2"
+math_comparision ${val1} ${val2}
 
 
 
@@ -686,13 +690,14 @@ format;
 
 
 
-#Colour game
+#Colour pallet code 
 print_colour_code(){
-
-
-#demo # Blue line 
+#demo #Blue line 
+echo "Demo blue line"
 for i in {16..21} {21..16} ; do echo -en "\e[38;5;${i}m#\e[0m" ; done ; echo
 
+print_design_till 80;
+echo "Demo colour codes for all possible colours ";
 for clbg in {40..47} {100..107} 49 ; do
 	for clfg in {30..37} {90..97} 39 ; do
 		for attr in 0 1 2 4 5 7 ; do
@@ -701,7 +706,11 @@ for clbg in {40..47} {100..107} 49 ; do
 		echo 
 	done
 done
+print_design_till 80;
 
+print_design_till 80;
+echo "Demo colour codes for all possible colours for foreground and background ";
+print_design_till 80;
 for fgbg in 38 48 ; do # Foreground / Background
     for color in {0..255} ; do # Colors
         # Display the color
@@ -720,6 +729,69 @@ done
 
 
 #Shell substitution
+
+
+#Command substitution in for loop 
+for i in `ls`
+do 
+format bold cyan ;
+echo "$i";
+format;
+file $i;
+done;
+
+#Command substitution for assigning 
+files_count=`ls | wc -l`
+echo "$files_count"
+
+
+
+
+#variable substitution 
+unset var
+
+#If var is null or unset, word is substituted for var. The value of var does not change.
+#HERE var is substituted only for 1 time 
+#Substitution
+echo ${var:-"Variable is not set"}
+echo "1 - Value of var is ${var}"
+
+
+#If var is null or unset, var is set to the value of word.
+#Assignment of value if ,var not set 
+
+echo ${var:="Variable is not set"}
+echo "2 - Value of var is ${var}"
+
+
+#If var is set, word is substituted for var. The value of var does not change.
+unset var
+echo ${var:+"This is default value"}
+echo "3 - Value of var is $var"
+
+var="Prefix"
+echo ${var:+"This is default value"}
+echo "4 - Value of var is $var"
+
+unset var
+#If var is null or unset, message is printed to standard error. This checks that variables are set correctly.
+echo ${var:?"Print this Error  message , since var is not set "}
+echo "5 - Value of var is ${var}"
+
+
+
+
+#Shell Quoting mechanisms 
+#MetaCharacters
+#* ? [ ] ' " \ $ ; & ( ) | ^ < > new-line space tab
+#To print any meta characters in between double quotes , use \ before the character
+#for example to print this :
+echo "I have $200.0 with me ;" do you agree ?" ";
+echo "I have \$200.0 with me ; \" do you agree ? \" ";
+# Or we can use single quote(') instead of double quote (")
+#ex:  
+echo 'I have $200.0 with me ;" do you agree ?" '
+#NOTE : text in single quote will not be parsed by shell , and even if there are variables substituted , they will not be substituted
 
 
 
